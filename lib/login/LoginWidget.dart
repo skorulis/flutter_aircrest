@@ -1,13 +1,10 @@
-import 'package:Aircrest/model/UserModel.dart';
+//import '../model/Authenticateduser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import "../api/UserAPI.dart";
+import "../store/AppStore.dart";
+//import "../api/UserAPI.dart";
 
-final List<Tab> tabs = <Tab>[
-  Tab(text: 'Login'),
-  Tab(text: 'Register')
-];
+final List<Tab> tabs = <Tab>[Tab(text: 'Login'), Tab(text: 'Register')];
 
 class LoginContainerWidget extends StatelessWidget {
   @override
@@ -32,23 +29,14 @@ class LoginContainerWidget extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: LoginWidget()
-              ),
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: RegisterWidget()
-              )
-              ],
+              Padding(padding: EdgeInsets.all(16.0), child: LoginWidget()),
+              Padding(padding: EdgeInsets.all(16.0), child: RegisterWidget())
+            ],
           ),
         );
       }),
     );
-    
   }
-
-
 }
 
 class LoginWidget extends StatefulWidget {
@@ -56,11 +44,9 @@ class LoginWidget extends StatefulWidget {
   _LoginWidgetState createState() {
     return _LoginWidgetState();
   }
-  
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -73,47 +59,37 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextField(
-          controller: usernameController, 
-          decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Username" )
-        ),
-        TextField(
+    return Column(children: <Widget>[
+      TextField(
+          controller: usernameController,
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), labelText: "Username")),
+      TextField(
           controller: passwordController,
           obscureText: true,
-          decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Password" )
-        ),
-        RaisedButton(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), labelText: "Password")),
+      RaisedButton(
           onPressed: () {
-            authenticate().then((AuthenticatedUser value) {
-                print("Finish " + value.email);
-              },
-              onError:(e) {
-                print("Failure" + e);
-              }
-            );
-            debugPrint("Login2" + usernameController.text);
+            debugPrint("Test" + usernameController.text);
+            Redux.store.dispatch(LoginAction(
+                username: usernameController.text,
+                password: passwordController.text));
+            debugPrint("Login32" + usernameController.text);
           },
-          child: Text("Login")
-        )
-      ]
-    );
+          child: Text("Login"))
+    ]);
   }
-
 }
 
 class RegisterWidget extends StatefulWidget {
-  
   @override
   _RegisterWidgetState createState() {
     return _RegisterWidgetState();
   }
-
 }
 
 class _RegisterWidgetState extends State<RegisterWidget> {
-
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -126,25 +102,21 @@ class _RegisterWidgetState extends State<RegisterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextField(
-          controller: usernameController, 
-          decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Username" )
-        ),
-        TextField(
+    return Column(children: <Widget>[
+      TextField(
+          controller: usernameController,
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), labelText: "Username")),
+      TextField(
           controller: passwordController,
           obscureText: true,
-          decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Password" )
-        ),
-        RaisedButton(
-          onPressed: () { 
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), labelText: "Password")),
+      RaisedButton(
+          onPressed: () {
             debugPrint("Press");
           },
-          child: Text("Register")
-        )
-      ]
-    );
+          child: Text("Register"))
+    ]);
   }
-
 }

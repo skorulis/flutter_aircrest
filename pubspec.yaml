@@ -22,6 +22,7 @@ environment:
 
 dependencies:
   http: ^0.12.2
+  async_redux: ^3.0.5
   flutter_redux: ^0.6.0
   json_annotation: ^3.1.0
   flutter:
