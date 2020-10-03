@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:async_redux/async_redux.dart';
 import 'store/AppState.dart';
-import "login/LoginWidget.dart";
+import "widget/main/AppTabsWidget.dart";
 import "store/AppStore.dart";
 
 void main() {
@@ -23,6 +23,6 @@ class MainAppWidget extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: LoginContainerWidget());
+        home: AppTabsWidget());
   }
 }

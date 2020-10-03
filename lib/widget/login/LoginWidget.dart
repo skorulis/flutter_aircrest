@@ -1,43 +1,6 @@
-//import '../model/Authenticateduser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import "../store/AppStore.dart";
-//import "../api/UserAPI.dart";
-
-final List<Tab> tabs = <Tab>[Tab(text: 'Login'), Tab(text: 'Register')];
-
-class LoginContainerWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: tabs.length,
-      // The Builder widget is used to have a different BuildContext to access
-      // closest DefaultTabController.
-      child: Builder(builder: (BuildContext context) {
-        final TabController tabController = DefaultTabController.of(context);
-        tabController.addListener(() {
-          if (!tabController.indexIsChanging) {
-            // Your code goes here.
-            // To get index of current tab use tabController.index
-          }
-        });
-        return Scaffold(
-          appBar: AppBar(
-            bottom: TabBar(
-              tabs: tabs,
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              Padding(padding: EdgeInsets.all(16.0), child: LoginWidget()),
-              Padding(padding: EdgeInsets.all(16.0), child: RegisterWidget())
-            ],
-          ),
-        );
-      }),
-    );
-  }
-}
+import "../../store/AppStore.dart";
 
 class LoginWidget extends StatefulWidget {
   @override
@@ -71,8 +34,10 @@ class _LoginWidgetState extends State<LoginWidget> {
               border: OutlineInputBorder(), labelText: "Password")),
       RaisedButton(
           onPressed: () {
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text("Change tab")));
             debugPrint("Test" + usernameController.text);
-            Redux.store.dispatch(LoginAction(
+            Redux.store.dispatchFuture(LoginAction(
                 username: usernameController.text,
                 password: passwordController.text));
             debugPrint("Login32" + usernameController.text);
@@ -114,6 +79,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               border: OutlineInputBorder(), labelText: "Password")),
       RaisedButton(
           onPressed: () {
+            Redux.store.dispatchFuture(RegisterAction(
+                username: usernameController.text,
+                password: passwordController.text));
             debugPrint("Press");
           },
           child: Text("Register"))

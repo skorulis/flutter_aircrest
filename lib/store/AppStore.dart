@@ -29,7 +29,8 @@ class MyErrorObserver<St> implements ErrorObserver<St> {
 
 class TestAction extends ReduxAction<AppState> {
   AppState reduce() {
-    return this.state;
+    print("TEST " + state.test.toString());
+    return AppState(email: state.email, test: state.test + 1);
   }
 }
 
@@ -42,8 +43,22 @@ class LoginAction extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
     debugPrint("Start reduce");
-    AuthenticatedUser response = await authenticate(username, password);
+    AuthenticatedUser response =
+        await UserAPI().authenticate(username, password);
     debugPrint("Finish reduce");
+    return AppState(email: response.email, test: 1);
+  }
+}
+
+class RegisterAction extends ReduxAction<AppState> {
+  final String username;
+  final String password;
+
+  RegisterAction({this.username, this.password});
+
+  @override
+  Future<AppState> reduce() async {
+    AuthenticatedUser response = await UserAPI().register(username, password);
     return AppState(email: response.email, test: 1);
   }
 }
