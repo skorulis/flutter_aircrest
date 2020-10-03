@@ -61,6 +61,20 @@ class RegisterAction extends ReduxAction<AppState> {
   }
 }
 
+class CreateCharacterAction extends ReduxAction<AppState> {
+  final String backgroundId;
+  final String name;
+
+  CreateCharacterAction({this.backgroundId, this.name});
+
+  @override
+  Future<AppState> reduce() async {
+    AuthenticatedUser response =
+        await UserAPI().createCharacter(backgroundId, name);
+    return AppState(authUser: response);
+  }
+}
+
 class LogoutAction extends ReduxAction<AppState> {
   @override
   AppState reduce() {

@@ -4,6 +4,7 @@ import 'store/AppState.dart';
 import "widget/main/AppTabsWidget.dart";
 import "store/AppStore.dart";
 import "widget/home/HomeDashboardWidget.dart";
+import "widget/newCharacter/NewCharacterWidget.dart";
 
 void main() {
   Redux.init();
@@ -40,15 +41,20 @@ class MainAppViewModel extends BaseModel<AppState> {
   MainAppViewModel();
 
   bool isLoggedIn;
+  bool hasCharacter;
 
   MainAppViewModel.build({
     @required this.isLoggedIn,
-  }) : super(equals: [isLoggedIn]);
+    @required this.hasCharacter,
+  }) : super(equals: [isLoggedIn, hasCharacter]);
 
   @override
-  MainAppViewModel fromStore() => MainAppViewModel.build(
-        isLoggedIn: state.authUser != null,
-      );
+  MainAppViewModel fromStore() {
+    bool hasUser = state.authUser != null;
+    return MainAppViewModel.build(
+        isLoggedIn: hasUser,
+        hasCharacter: hasUser && state.authUser.characterId != null);
+  }
 }
 
 class MainAppWidget extends StatelessWidget {
@@ -60,7 +66,11 @@ class MainAppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     print("$viewModel");
     if (viewModel.isLoggedIn) {
-      return HomeDashboardWidget();
+      if (viewModel.hasCharacter) {
+        return HomeDashboardWidget();
+      } else {
+        return NewCharacterWidget();
+      }
     } else {
       return AppTabsWidget();
     }
