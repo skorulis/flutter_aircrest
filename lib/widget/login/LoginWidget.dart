@@ -34,13 +34,9 @@ class _LoginWidgetState extends State<LoginWidget> {
               border: OutlineInputBorder(), labelText: "Password")),
       RaisedButton(
           onPressed: () {
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text("Change tab")));
-            debugPrint("Test" + usernameController.text);
             Redux.store.dispatchFuture(LoginAction(
                 username: usernameController.text,
                 password: passwordController.text));
-            debugPrint("Login32" + usernameController.text);
           },
           child: Text("Login"))
     ]);
