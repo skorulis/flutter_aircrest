@@ -7,8 +7,9 @@ part 'AuthenticatedUser.g.dart';
 class AuthenticatedUser {
   final String email;
   final AuthToken token;
+  final String characterId;
 
-  AuthenticatedUser({this.email, this.token});
+  AuthenticatedUser({this.email, this.token, this.characterId});
 
   factory AuthenticatedUser.fromJson(Map<String, dynamic> json) =>
       _$AuthenticatedUserFromJson(json);

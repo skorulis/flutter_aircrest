@@ -12,6 +12,7 @@ AuthenticatedUser _$AuthenticatedUserFromJson(Map<String, dynamic> json) {
     token: json['token'] == null
         ? null
         : AuthToken.fromJson(json['token'] as Map<String, dynamic>),
+    characterId: json['characterId'] as String,
   );
 }
 
@@ -19,4 +20,5 @@ Map<String, dynamic> _$AuthenticatedUserToJson(AuthenticatedUser instance) =>
     <String, dynamic>{
       'email': instance.email,
       'token': instance.token,
+      'characterId': instance.characterId,
     };

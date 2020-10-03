@@ -47,7 +47,7 @@ class MainAppViewModel extends BaseModel<AppState> {
 
   @override
   MainAppViewModel fromStore() => MainAppViewModel.build(
-        isLoggedIn: state.email != null,
+        isLoggedIn: state.authUser != null,
       );
 }
 

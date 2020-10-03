@@ -13,8 +13,7 @@ class Redux {
 
   static init() {
     _store = Store<AppState>(
-        initialState: AppState(email: null, test: 1),
-        errorObserver: MyErrorObserver<AppState>());
+        initialState: AppState(), errorObserver: MyErrorObserver<AppState>());
   }
 }
 
@@ -29,8 +28,7 @@ class MyErrorObserver<St> implements ErrorObserver<St> {
 
 class TestAction extends ReduxAction<AppState> {
   AppState reduce() {
-    print("TEST " + state.test.toString());
-    return AppState(email: state.email, test: state.test + 1);
+    return Redux.store.state;
   }
 }
 
@@ -46,7 +44,7 @@ class LoginAction extends ReduxAction<AppState> {
     AuthenticatedUser response =
         await UserAPI().authenticate(username, password);
     debugPrint("Finish reduce");
-    return AppState(email: response.email, test: 1);
+    return AppState(authUser: response);
   }
 }
 
@@ -59,6 +57,13 @@ class RegisterAction extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
     AuthenticatedUser response = await UserAPI().register(username, password);
-    return AppState(email: response.email, test: 1);
+    return AppState(authUser: response);
+  }
+}
+
+class LogoutAction extends ReduxAction<AppState> {
+  @override
+  AppState reduce() {
+    return AppState();
   }
 }

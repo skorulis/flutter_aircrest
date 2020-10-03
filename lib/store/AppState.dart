@@ -1,9 +1,10 @@
+import 'package:Aircrest/model/AuthenticatedUser.dart';
 import 'package:meta/meta.dart';
+import "../model/AuthenticatedUser.dart";
 
 @immutable
 class AppState {
-  final String email;
-  final int test;
+  final AuthenticatedUser authUser;
 
-  AppState({@required this.email, @required this.test});
+  AppState({this.authUser});
 }

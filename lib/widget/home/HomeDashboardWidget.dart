@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "../../store/AppStore.dart";
 
 class HomeDashboardWidget extends StatelessWidget {
   @override
@@ -6,7 +7,14 @@ class HomeDashboardWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Aircrest")),
       body: Column(
-        children: [Text("I'm home")],
+        children: [
+          Text("I'm home"),
+          RaisedButton(
+              onPressed: () {
+                Redux.store.dispatch(LogoutAction());
+              },
+              child: Text("Logout"))
+        ],
       ),
     );
   }
