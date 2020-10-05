@@ -6,10 +6,14 @@ part 'EntityNetworkModel.g.dart';
 @JsonSerializable()
 class EntityNetworkModel {
   final String id;
-  final EntityType type;
+  final int type;
   final bool isComplete;
 
   EntityNetworkModel({this.id, this.type, this.isComplete});
+
+  EntityType entityType() {
+    return EntityType.values[type];
+  }
 
   factory EntityNetworkModel.fromJson(Map<String, dynamic> json) =>
       _$EntityNetworkModelFromJson(json);

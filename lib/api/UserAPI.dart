@@ -4,13 +4,31 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import "../model/AuthenticatedUser.dart";
 import "../model/NetworkError.dart";
+import "../store/AppStore.dart";
 
 class BaseAPI {
   String _makeURL(String path) {
     return "http://localhost:7000/api/" + path;
   }
 
+  Map<String, dynamic> _fixHeaders(Map<String, String> headers) {
+    print("FIX1");
+    if (headers == null) {
+      headers = Map<String, String>();
+    }
+    print("FIX2");
+    String token = Redux.store.state?.authUser?.token?.token;
+    if (token != null) {
+      print("TEEST2");
+      headers["Authorization"] = "Bearer " + token;
+      print("Maybe");
+    }
+    print(headers);
+    return headers;
+  }
+
   http.Response _finish(http.Response response) {
+    print("FINISH");
     String responseBody = response.body;
     print("RESPONSE: $responseBody");
     if (response.statusCode >= 400) {
@@ -23,6 +41,7 @@ class BaseAPI {
   Future<http.Response> defaultPost(String path,
       {Map<String, String> headers, body}) async {
     String fullURL = _makeURL(path);
+    headers = _fixHeaders(headers);
     print("POST : $fullURL with $body");
     final http.Response response =
         await http.post(fullURL, body: body, headers: headers);
@@ -32,6 +51,7 @@ class BaseAPI {
   Future<http.Response> defaultGet(String path,
       {Map<String, String> headers, body}) async {
     String fullURL = _makeURL(path);
+    headers = _fixHeaders(headers);
     print("GET : $fullURL");
     final response = await http.get(fullURL, headers: headers);
     return _finish(response);
