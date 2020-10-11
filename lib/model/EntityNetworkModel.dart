@@ -15,6 +15,10 @@ class EntityNetworkModel {
     return EntityType.values[type];
   }
 
+  bool operator ==(other) => other is EntityNetworkModel && other.id == id;
+
+  int get hashCode => id.hashCode;
+
   factory EntityNetworkModel.fromJson(Map<String, dynamic> json) =>
       _$EntityNetworkModelFromJson(json);
   Map<String, dynamic> toJson() => _$EntityNetworkModelToJson(this);

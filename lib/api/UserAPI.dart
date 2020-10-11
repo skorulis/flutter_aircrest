@@ -12,23 +12,17 @@ class BaseAPI {
   }
 
   Map<String, dynamic> _fixHeaders(Map<String, String> headers) {
-    print("FIX1");
     if (headers == null) {
       headers = Map<String, String>();
     }
-    print("FIX2");
     String token = Redux.store.state?.authUser?.token?.token;
     if (token != null) {
-      print("TEEST2");
       headers["Authorization"] = "Bearer " + token;
-      print("Maybe");
     }
-    print(headers);
     return headers;
   }
 
   http.Response _finish(http.Response response) {
-    print("FINISH");
     String responseBody = response.body;
     print("RESPONSE: $responseBody");
     if (response.statusCode >= 400) {

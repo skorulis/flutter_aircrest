@@ -28,8 +28,6 @@ class MainApp extends StatelessWidget {
 class MainAppConnector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print("Build");
-    print("MainConnect");
     return StoreConnector<AppState, MainAppViewModel>(
         model: MainAppViewModel(),
         builder: (BuildContext context, MainAppViewModel vm) =>
@@ -64,12 +62,11 @@ class MainAppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("$viewModel");
     if (viewModel.isLoggedIn) {
       if (viewModel.hasCharacter) {
         return HomeDashboardWidget();
       } else {
-        return NewCharacterWidget();
+        return NewCharacterConnector();
       }
     } else {
       return AppTabsWidget();
