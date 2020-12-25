@@ -1,6 +1,7 @@
 # Aircrest
 
-A new Flutter project.
+An experiment developing with flutter. Abandoned after deciding that flutter wasn't the right technology for me.
+Built using 1.23.0-8.0.pre.69
 
 ## Getting Started
 
